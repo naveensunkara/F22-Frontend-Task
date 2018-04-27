@@ -1,0 +1,82 @@
+<section class="row content">
+  <div class="col-lg-3 mt-lg-3" *ngFor="let list of lists; index as i" mwlDroppable (drop)="dropped($event,list)" (dragEnter)="dragDrop = 'dropped'" (dragOver)="dragDrop = 'dropped'" (dragLeave)="dragDrop = 'dragged'">
+    <div class="col-12 list p-0 shadow">
+      <div class="list-header">
+        <h6 class="font-weight-bold">{{list.title}}</h6>
+        <h6 class="m-0">{{list.card.length}} Cards</h6>
+        <button class="btn btn-danger font-weight-bold remove" data-toggle="modal" data-target="#myModal" (click)="setVar(list.title,'List')">-</button>
+      </div>
+      <div class="list-content col pt-0" #listContent>
+        <div class="card-container mt-2 btn btn-block btn-light" *ngFor="let card of list.card; index as j" mwlDraggable (dragEnd)="dragEnd($event, list, card)" [dropData]="card" #cardContainer contenteditable="true">
+          <h6 class="m-0">{{card.title}}</h6>
+          <button class="btn btn-light font-weight-bold remove" data-toggle="modal" data-target="#myModal" (click)="setVar(list.title,'Card',card.title)">-</button>
+        </div>
+        <div class="addCard mt-2" id="addCard{{i}}">
+          <div class="card">
+            <div class="card-header p-0" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-light btn-block" data-toggle="collapse" [attr.data-target]="'#'+list.title" [attr.aria-controls]="'#'+list.title">
+                  Add Card
+                </button>
+              </h5>
+            </div>
+
+            <div id="{{list.title}}" class="collapse" aria-labelledby="headingOne" [attr.data-parent]="'#addCard'+i">
+              <div class="card-body">
+                <textarea [(ngModel)]="newCard" rows="3" class="form-control" required></textarea>
+                <button class="btn btn-primary btn-block mt-2" data-toggle="collapse" [attr.data-target]="'#'+list.title" [attr.aria-controls]="'#'+list.title" (click) = "addCard(list.title)">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="addCard removeAll mt-2" *ngIf="list.title == 'Completed'">
+          <button class="btn btn-light btn-block" (click)="setVar('Completed','all Cards in Completed List',' ')" data-toggle="modal" data-target="#myModal">
+            Remove All Cards
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 mt-lg-3">
+    <div class="addList" id="addList">
+      <div class="card">
+        <div class="card-header p-0" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-light btn-block" data-toggle="collapse" data-target="#addListForm" aria-controls="#addListForm">
+              Add List
+            </button>
+          </h5>
+        </div>
+
+        <div id="addListForm" class="collapse" aria-labelledby="headingOne" data-parent="#addList">
+          <div class="card-body">
+            <textarea [(ngModel)]="newList" rows="3" class="form-control" required></textarea>
+            <button class="btn btn-primary btn-block mt-2" data-toggle="collapse" data-target="#addListForm" aria-controls="#addListForm" (click)="addList()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="total">Total Cards: {{totalCards}}</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModalTitle">Confirmation Prompt</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you really want to remove {{removeType == 'List' ? removeListTitle : removeCardTitle}} {{removeType}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="remove(removeListTitle,removeType,removeCardTitle)" data-dismiss="modal">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>

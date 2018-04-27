@@ -1,0 +1,52 @@
+section.row{
+    padding: 5px 8px;
+    background: #069cf3;
+    font-size: 14px;
+    box-shadow: 0 0 20px 0 #000000ad;
+    a{
+        cursor: pointer;
+    }
+    .float-left {
+        border-radius: 3px;
+        color: #fff;
+        font-weight: 700;
+        margin: 0 5px 5px 0;
+        padding: 8px;
+        line-height: 15px;
+        &:hover{
+            background-color: hsla(0,0%,100%,.2);
+        }
+    }
+    .signup{
+        background: linear-gradient(180deg,#61bd4f 0,#5aac44);
+        padding: 0 12px;
+        height: 30px;
+        border-radius: 3px;
+        color: #f3f3f3;
+        display: inline-block;
+        font-weight: 700;
+        line-height: 30px;
+        margin-right: 8px;
+        min-width: 30px;
+        &:hover{
+            background: linear-gradient(180deg,#5aac44 0,#519839);
+        }
+    }
+    .login{
+        background: hsla(0,0%,100%,.3);
+        border-radius: 3px;
+        color: #f3f3f3;
+        display: inline-block;
+        font-weight: 700;
+        line-height: 30px;
+        margin-right: 8px;
+        min-width: 30px;
+        padding: 0 12px;
+        &:hover{
+            background: hsla(0,0%,100%,.2);
+        }
+    }
+    .col-lg-4.text-center:last-child{
+        line-height: 36px;
+    }
+}
